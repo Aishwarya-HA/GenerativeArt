@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Generative Art</title>
+    <script src="p5.js"></script>
+    <script src="p5.js"></script>
+    <style>
+        body { text-align: center; background: #222; color: white; }
+        canvas { border: 2px solid white; }
+        .controls { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Interactive Generative Art</h1>
+    <div class="controls">
+        <label>Brush Size:</label>
+        <input type="range" id="sizeSlider" min="1" max="20" value="5">
+        <label>Color:</label>
+        <input type="color" id="colorPicker">
+        <button onclick="clearCanvas()">Clear</button>
+        <button onclick="saveCanvasWrapper()">Save</button>
+    </div>
+    <script>
+        let brushSize = 5;
+        let brushColor = '#ffffff';
+        
+        function setup() {
+            createCanvas(600, 400).parent(document.body);
+            background(0);
+        }
+        
+        function draw() {
+            if (mouseIsPressed) {
+                stroke(brushColor);
+                strokeWeight(brushSize);
+                line(mouseX, mouseY, pmouseX, pmouseY);
+            }
+        }
+        
+        document.getElementById('sizeSlider').addEventListener('input', (e) => {
+            brushSize = e.target.value;
+        });
+        
+        document.getElementById('colorPicker').addEventListener('input', (e) => {
+            brushColor = e.target.value;
+        });
+        
+        function clearCanvas() {
+            background(0);
+        }
+        
+        function saveCanvasWrapper() {
+            saveCanvas('myArt', 'png');
+        }
+    </script>
+</body>
+</html>
